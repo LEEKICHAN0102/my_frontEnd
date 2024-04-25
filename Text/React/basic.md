@@ -245,7 +245,8 @@ export default FunctionalComponent;
 
 - 코드를 더 간결하고 재사용 가능하게 만들고, 클래스의 사용을 피하면서도 동일한 기능을 제공합니다. 다음과 같은 주요 Hooks가 있습니다.
 
-- 기본 Hooks
+#### 기본 Hooks
+
 1. useState: [useState](https://ko.legacy.reactjs.org/docs/hooks-reference.html#usestate) 훅은 함수형 컴포넌트 내에서 상태를 추가하고 관리할 수 있도록 해줍니다. 이 훅을 사용하면 클래스형 컴포넌트의 this.state와 this.setState 메서드와 비슷한 동작을 수행할 수 있습니다.
 
 2. useEffect: [useEffect](https://ko.legacy.reactjs.org/docs/hooks-reference.html#useeffect) 훅은 부수 효과(side effect)를 수행할 수 있도록 해줍니다. 이 훅을 사용하여 컴포넌트가 렌더링될 때나 상태가 업데이트될 때 특정한 동작을 수행할 수 있습니다. componentDidMount, componentDidUpdate, componentWillUnmount와 비슷한 역할을 합니다.
@@ -253,7 +254,8 @@ export default FunctionalComponent;
 3. useContext: [useContext](https://ko.legacy.reactjs.org/docs/hooks-reference.html#usecontext) 훅은 React의 컨텍스트(Context)를 사용할 수 있도록 해줍니다. 이 훅을 사용하여 컴포넌트 트리 상에서 전역적인 데이터를 전달할 수 있습니다.
 
 
-- 추가 Hooks
+#### 추가 Hooks
+
 4. useRef: [useRef](https://ko.legacy.reactjs.org/docs/hooks-reference.html#useref) 훅은 ref를 생성하고 다룰 수 있도록 해줍니다. 이 훅을 사용하여 DOM 요소에 직접 접근하거나 컴포넌트의 인스턴스 변수를 저장할 수 있습니다.
 
 5. useReducer: [useReducer](https://ko.legacy.reactjs.org/docs/hooks-reference.html#usereducer) 훅은 Redux와 비슷한 방식으로 상태를 관리할 수 있도록 해줍니다. 이 훅을 사용하여 복잡한 상태 로직을 분리하고 관리할 수 있습니다.
@@ -262,4 +264,41 @@ export default FunctionalComponent;
 
 <br>
 
+### useEffect => componentDidMount, componentDidUpdate, componentWillUnmount
+
+- 함수형 컴포넌트에서 클래스형 컴포넌트의 라이프사이클 메서드를 비슷하게 구현할 수 있는 방법의 예시로 React Hooks의 useEffect를 들어보겠습니다.
+
+1. componentDidMount: 클래스형 컴포넌트에서 componentDidMount는 컴포넌트가 처음으로 렌더링 된 후 한번만 실행되는 메서드 입니다. 초기화 또는 외부 데이터 로딩에 사용됩니다.
+
+- 함수형 컴포넌트에서 componentDidMount에 해당하는 동작은 useEffect 훅의 두 번째 인자로 빈 배열을 전달하여 구현할 수 있습니다. 이렇게 하면 컴포넌트가 처음으로 렌더링될 때 한 번만 실행되는 효과를 얻을 수 있습니다.
+
+```
+useEffect(() => {
+  // componentDidMount
+}, []);
+```
+
+2. componentDidUpdate: 클래스형 컴포넌트에서 componentDidUpdate는 컴포넌트가 업데이트될 때마다 실행되는 메서드입니다. 주로 이전 props나 state와 현재 props나 state를 비교하여 변경 사항을 처리하는데 사용됩니다. 
+
+```
+useEffect(() => {
+  // componentDidUpdate
+}, [update]);
+```
+
+- 함수형 컴포넌트에서 componentDidUpdate에 해당하는 동작은 useEffect 훅의 두 번째 인자로 특정 state나 props를 전달하여 구현할 수 있습니다. 이렇게 하면 해당 state나 props가 변경될 때마다 실행되는 효과를 얻을 수 있습니다.
+
+3. componentWillUnmount: 클래스형 컴포넌트에서 componentWillUnmount는 컴포넌트가 제거되기 직전에 실행되는 메서드입니다. 주로 이벤트 리스너 해제나 타이머 제거 등의 정리 작업에 사용됩니다.
+
+- 함수형 컴포넌트에서 componentWillUnmount에 해당하는 동작은 useEffect 훅의 반환 함수로 구현할 수 있습니다. 이렇게 하면 컴포넌트가 언마운트될 때 실행되는 효과를 얻을 수 있습니다.
+
+```
+useEffect(() => {
+  return () => {
+    // componentDidUnmount
+  };
+}, []);
+```
+
+<br>
 
