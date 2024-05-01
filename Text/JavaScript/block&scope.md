@@ -1,0 +1,208 @@
+# 자바스크립트의 블록과 스코프
+
+1. 블록문: 0개 이상의 statement(문 {})을 묶은 단위를 말하며 제어문 , 함수에서 사용합니다. 블록안에서 선언된 변수를 블록 외부에서 접근할 수 없습니다. 
+
+2. 스코프: 변수가 유효한 범위를 나타내는 개념 입니다. 전역 스코프(Global Scope)와 지역 스코프(Local Scope), 렉시컬 스코프(Lexical Scope) 나뉩니다.
+
+```
+// 블록 안에 선언된 변수와 상수를 밖에서 사용이 불가.
+{
+  const x = 'Hello'; // 지역 스코프
+  let y = 'world!';
+  console.log(x, y); // Hello World!
+}
+
+console.log(x); // error
+console.log(y); // error
+(스코프의 안에서는 바깥의 것들을 사용이 가능 합니다)
+
+let x = 'Hello'; // 전역 스코프
+{
+    const y = 'World!';
+    console.log(x,y); // Hello World!
+}
+```
+
+<br>
+
+```
+// 블록 안쪽의 변수나 상수가 재선언 되면 바깥 것을 덮어 씁니다.
+const xx = 0;
+let yy = 'Hello!';
+console.log(xx, yy); // 0 Hello!
+
+{
+  const xx = 1; // 💡 블록 안에서는 바깥의 const 재선언 가능
+  let yy = '안녕하세요~';
+
+  console.log(xx, yy); // 1 안녕하세요~
+  // 스코프 내에서 재선언시 const,let 키워드를 뺴고 작성하게 되면 바깥의 것도 덮어쓰게 된다. (변수(variable) 호이스팅)
+  //  xx = 1; (const 상수 재선언 불가)
+  //  yy = "안녕하세요~";  마지막 console.log에 찍히는 yy 값 또한 변경
+}
+
+console.log(xx, yy); // 0 Hello!
+```
+
+<br>
+
+### 스코프 체인(Scope Chain)
+
+- 스코프 체인은 변수에 접근할 때 변수가 현재 스코프뿐만 아니라 상위 스코프까지 거슬러 올라가며 검색하는 과정을 말합니다. 스코프 체인은 코드에서 변수를 참조할 때 식별자 해결(identifier resolution)을 수행하는 메커니즘입니다.
+
+- 체이닝이 무엇인지 쉽게 설명하자면 `블럭안 해당 변수또는 상수가 없다면 바깥쪽으로 나간다 => 체이닝` 이라고 합니다. 
+
+- 이러한 개념을 종합하여 자바스크립트의 스코프는 다음과 같은 특징을 가집니다
+
+```
+- 전역 스코프(Global Scope): 전역 범위는 코드의 모든 곳에서 접근할 수 있는 범위입니다. 전역 스코프에 선언된 변수는 어디서든 참조할 수 있습니다.
+
+- 지역 스코프(Local Scope): 지역 스코프는 함수 내부에서 선언된 변수의 범위를 의미합니다. 함수가 호출될 때마다 새로운 지역 스코프가 생성되며, 함수 내부에서 선언된 변수는 해당 함수 내부에서만 접근 가능합니다.
+
+- 렉시컬 스코프(Lexical Scope): 렉시컬 스코프는 변수의 유효 범위를 함수의 정의 위치에 기반하여 결정합니다. 함수가 선언된 위치에 따라 스코프가 결정되므로, 함수가 어디서 호출되는지에 관계없이 스코프가 결정됩니다.
+```
+
+<br>
+
+### 제어문
+
+- 제어문은 프로그램의 흐름(flow)을 제어하는데 사용되는 문(statement)들을 말합니다. 자바스크립트에서는 다양한 종류의 제어문이 제공되며, 주로 조건문과 반복문이 가장 많이 사용됩니다.
+
+1. 조건문(Conditional Statements)
+
+- if/else: if 문은 지정한 조건이 참인 경우 명령문(statement)을 실행합니다. 조건이 거짓인 경우 또 다른 명령문이 실행 될 수 있습니다. if , if/else , if ~else if 등 간단한 구조는 괜찮으나 그 사용량이 많아지게 되면 코드의 가독성이 떨어지고 효율적인 측면에서도 좋지 않습니다.
+
+```
+function evalNum () {
+  const x = 21;
+
+  if (x % 2) {
+    console.log('홀수입니다.');
+    return;
+  }
+
+  if (x % 4) {
+    console.log('짝수입니다.');
+    return;
+  }
+
+  console.log('4의 배수입니다.');
+}
+
+evalNum();
+console.log('블록문 바깥');
+```
+
+- 따라서 적절한 return(함수의 실행을 종료한다)문을 사용하여 if문의 사용의도와 그 동작을 보는 사람으로 하여금 이해하기 쉽고 더 좋은 실행 환경을 위해 위와 같이 작성하는 편이 좋습니다.
+
+<br>
+
+2. 반복문(Loop Statements)
+
+- 반복문은 조건이 충족될 때까지 코드 블록을 반복하여 실행합니다.
+
+- for: for 문은 괄호로 감싸고 세미콜론으로 구분한 세 개의 선택식과, 반복을 수행할 문(주로 블럭문)으로 이루어져 있습니다.
+
+```
+// for 문의 구성
+for ([initialization]; [condition]; [final-expression]){
+  // true 인 동할 실행될 문(statement)
+}
+```
+
+- 위의 일반적인 for 문을 사용하는 법도 있지만 객체와 배열에서 for 문을 사용하는 방법이 있습니다.
+
+<br>
+
+- for...in: for...in문은 상속된 열거 가능한 속성들을 포함하여 객체에서 문자열로 키가 지정된 모든 열거 가능한 속성에 대해 반복합니다.
+
+```
+const person = {
+    name: 'John',
+    age: 30,
+    gender: 'male'
+};
+
+for (const key in person) {
+    console.log(key + ': ' + person[key]);
+}
+```
+
+<br>
+
+- for...of: for...of 명령문은 반복가능한 객체 (Array, Map, Set, String, TypedArray, arguments 객체 등을 포함)에 대해서 반복하고 각 개별 속성값에 대해 실행되는 문이 있는 사용자 정의 반복 후크를 호출하는 루프를 생성합니다.
+
+- 배열 또한 객체이기 때문에 for...in 을 사용해도 값이 출력 되지만 이전 수행 한 것처럼 value가 아닌 key 값이 출력 됩니다. for...of 를 사용하여 value 값을 받아올 수 있기에 배열에서 반복문을 사용할 때 유용하게 사용 가능합니다.(정확히는 iterable(배열도 그 일종)에서 사용 됩니다)
+
+- 이터러블(iterable) : 반복되는 열거가능(enumerable)한 속성이 있는 객체를 말합니다.
+
+```
+const list = [1, '가나다', false, null];
+
+for (const item of list) {
+  console.log(item); // 1 | 가나다 | false | null
+}
+for (const el of list) {
+  console.log(el); // 1 | 가나다 | false | null
+}
+```
+
+<br>
+
+- 반복문을 특정 시점에서 루프를 건너 뛰거나 종료할 때 사용할 수 있는 continue & break 가 있습니다.
+
+- continue - 한 루프를 건너뛰게 됩니다.
+
+```
+for (let i = 1; i <= 10; i++) {
+  if (i % 3 === 0) continue;
+  console.log(i);
+}
+
+console.log('for 루프 종료'); // ( 1 | 2 | 4 | 5 | 7 | 8 | 10 )
+```
+
+- break:  블록을 종료하고 빠져나옵니다.
+
+```
+for (let i = 1; i <= 10; i++) {
+  if (i === 5) break;
+  console.log(i);
+}
+
+console.log('for 루프 종료'); // 1 | 2 | 3 | 4  -> break(루프 종료)
+```
+
+<br>
+
+- while & do while: 조건이 참인 동안 반복 수행합니다.
+
+```
+let x = 0;
+
+while (x < 10) {
+  console.log(x++); // 0 ~ 9
+}
+```
+
+- 만약 위 코드에서 x의 증감을 제거 한다면 또는 조건을 인위적 으로 true로 작성하였을 시 무한루프가 될 것입니다. 이때 break 문을 통해 무한루프를 탈출 할 수 있습니다.
+
+```
+let x = 0;
+
+while (true) {
+  if (x++ >= 5) break; // 😎
+  console.log(x);
+}
+// 1 ~ 5 출력
+```
+
+- do while: do while의 경우 우선 수행후에 조건을 평가하는 특징을 가집니다.
+
+```
+let x = 12;
+
+do {
+  console.log(x++); //우선 수행 12 출력
+} while (x < 10); // x < 10 조건 불충족 코드 종료
+```
