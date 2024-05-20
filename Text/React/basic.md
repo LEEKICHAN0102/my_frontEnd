@@ -4,6 +4,36 @@
 
 <br>
 
+## 목차
+  - [리액트의 원리](#리액트의-원리)
+  - [리액트의 특징](#리액트의-특징)
+  - [리액트의 장단점](#리액트의-장단점)
+  - [가상 DOM(Virtual DOM)이란?](#가상-domvirtual-dom이란)
+  - [JSX(JavaScript XML)](#jsxjavascript-xml)
+  - [엘리먼트(Element) & 컴포넌트(Component)의 차이점](#엘리먼트element--컴포넌트component의-차이점)
+  - [리액트에서 컴포넌트를 만드는 방법?](#리액트에서-컴포넌트를-만드는-방법)
+  - [함수형과 클래스형의 차이점?](#함수형과-클래스형의-차이점)
+  - [리액트의 생명주기(Lifecycle)](#리액트의-생명주기lifecycle)
+  - [함수형 컴포넌트의 Hooks 를 사용한 상태(useState) & 생명주기(useEffect)](#함수형-컴포넌트의-hooks-를-사용한-상태usestate--생명주기useeffect)
+  - [React Hooks](#react-hooks)
+  - [useEffect => componentDidMount, componentDidUpdate, componentWillUnmount](#useeffect--componentdidmount-componentdidupdate-componentwillunmount)
+  - [React의 State](#react의-state)
+  - [React의 State 관리?](#react의-state-관리)
+  - [React의 Props](#react의-props)
+  - [Props Drilling 과 해결 방법](#props-drilling-과-해결-방법)
+  - [State를 직접 변경하지 않고 setState를 사용하는 이유](#state를-직접-변경하지-않고-setstate를-사용하는-이유)
+  - [React 상태 변화에 따른 업데이트 플로우](#react-상태-변화에-따른-업데이트-플로우)
+  - [HTML과 React의 이벤트 처리 차이점](#html과-react의-이벤트-처리-차이점)
+  - [React의 Key Props 사용 이유](#react의-key-props-사용-이유)
+  - [제어 컴포넌트(Controlled Component)와 비제어 컴포넌트(Uncontrolled Component)](#제어-컴포넌트controlled-component와-비제어-컴포넌트uncontrolled-component)
+  - [Context API](#context-api)
+  - [React.Fragment](#reactfragment)
+  - [메모이제이션(Memoization)](#메모이제이션memoization)
+  - [React의 메모이제이션(Memoization)](#react의-메모이제이션memoization)
+  - [React의 useRef()](#react의-useref)
+
+<br>
+
 ### 리액트의 원리
 
 1. 가상 DOM (Virtual DOM): React는 가상 DOM을 사용하여 UI를 효율적으로 업데이트합니다. 변경 사항은 먼저 가상 DOM에 반영되고, 이후에 실제 DOM에 반영됩니다. 이를 통해 성능이 향상되고 불필요한 DOM 조작을 최소화합니다.

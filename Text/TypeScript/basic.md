@@ -8,6 +8,21 @@
 
 <br>
 
+## 목차
+  - [기본 타입(Primitive types)](#기본-타입primitive-types)
+  - [참조 타입(Reference types)](#참조-타입reference-types)
+  - [union, any, unknown](#union-any-unknown)
+  - [함수의 타입](#함수의-타입)
+  - [Narrowing & Assertion](#narrowing--assertion)
+  - [type alias](#type-alias)
+  - [type alias 에 함수의 타입 지정](#type-alias-에-함수의-타입-지정)
+  - [클래스의 타입 지정](#클래스의-타입-지정)
+  - [interface](#interface)
+  - [rest parameter & destructuring](#rest-parameter--destructuring)
+  - [React + TypeScript](#react--typescript)
+
+<br>
+
 ### 기본 타입(Primitive types)
 
 - 변수에 타입을 지정하는 방법으로 콜론(:)을 사용할 수 있습니다. 변수명:타입명 으로 선언 합니다. => let name: string = "KICHAN";
