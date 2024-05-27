@@ -293,35 +293,371 @@ export default Counter;
 <br>
 
 
-### react-query
+### tanStack-query(react-query)
 
-- 다음으로 알아볼 라이브러리는 [react-query](https://tanstack.com/query/latest/docs/framework/react/overview) 입니다. 여타 다른 상태관리 라이브러리들과는 차이점이 있습니다. 위 라이브러리들이 클라이언트 중심의 데이터를 관리한 것과는 다르게 react-query는 서버의 데이터 상태를 관리하는데에 중점적(데이터 페칭 및 캐싱 위주)으로 사용되는 라이브러리 입니다.
+- 다음으로 알아볼 라이브러리는 [tanStack-query](https://tanstack.com/query/latest/docs/framework/react/overview) 입니다. 여타 다른 상태관리 라이브러리들과는 차이점이 있습니다. 위 라이브러리들이 클라이언트 중심의 데이터를 관리한 것과는 다르게 tanStack-query는 서버의 데이터 상태를 관리하는데에 중점적(데이터 페칭 및 캐싱 위주)으로 사용되는 라이브러리 입니다.
 
-- 엄밀하게 살펴보면 상태관리 라이브러리가 아닌 데이터 관리 라이브러리에 가깝습니다. 실제로 store를 생성하거나 클라이언트의 데이터 관리를 하는데 react-query는 적합하지 않으나, 클라이언트 측의 상태를 관리하기 위해 사용될 수도 있습니다. 
+- 엄밀하게 살펴보면 상태관리 라이브러리가 아닌 데이터 관리 라이브러리에 가깝습니다. 실제로 store를 생성하거나 클라이언트의 데이터 관리를 하는데 tanStack-query는 적합하지 않으나, 클라이언트 측의 상태를 관리하기 위해 사용될 수도 있습니다. 
 
-- 예를 들어, API 호출의 로딩 상태, 오류 상태 등을 관리할 수 있습니다. 또한 React Query의 쿼리 키와 같은 기능을 사용하여 일부 클라이언트 측 상태를 관리할 수도 있습니다. 따라서 React Query는 데이터 관리에 사용되지만, 일부 상황에서는 상태 관리에도 활용될 수 있습니다. 
+- 예를 들어, API 호출의 로딩 상태, 오류 상태 등을 관리할 수 있습니다. 또한 tanStack-query의 쿼리 키와 같은 기능을 사용하여 일부 클라이언트 측 상태를 관리할 수도 있습니다. 따라서 tanStack-query는 데이터 관리에 사용되지만, 일부 상황에서는 상태 관리에도 활용될 수 있습니다. 
 
-- 최근에 TanStack으로 병합되면서 이름이 TanStack Query로 변경 되었습니다(v5). 헷갈릴 수 있기에 작성 과정에서는 react-query로 통일하겠습니다. react-query의 특징에 대해 알아보겠습니다.
+- React-query는 최근에 TanStack으로 병합되면서 이름이 TanStack Query로 변경 되었습니다(v5).사용법도 약간 변경 되었는데 그 부분에 대해서 중점적으로 확인해보겠습니다.
 
 <br>
 
 ```
 // npm i @tanstack/react-query 
 
-react-query의 특징
+tanStack-query의 특징
 
-- 상태 및 비동기 데이터 관리: React Query는 비동기 데이터를 관리하고 UI 상태를 업데이트하는 데 사용됩니다. API 호출, 데이터 로딩, 오류 처리 등을 편리하게 처리할 수 있습니다.
+- 상태 및 비동기 데이터 관리: tanStack-query는 비동기 데이터를 관리하고 UI 상태를 업데이트하는 데 사용됩니다. API 호출, 데이터 로딩, 오류 처리 등을 편리하게 처리할 수 있습니다.
 
-- 자동 캐싱 및 리렌더링: React Query는 데이터를 자동으로 캐싱하여 성능을 향상시킵니다. 동일한 데이터 요청이 다시 발생할 때 캐시된 데이터를 사용하여 네트워크 요청을 줄입니다.
+- 자동 캐싱 및 리렌더링: 데이터를 자동으로 캐싱하여 성능을 향상시킵니다. 동일한 데이터 요청이 다시 발생할 때 캐시된 데이터를 사용하여 네트워크 요청을 줄입니다.
 
-- 옵티미스틱 업데이트: React Query는 옵티미스틱 업데이트를 지원하여 UI에 즉시 변경 사항을 반영할 수 있습니다. 네트워크 요청을 보내기 전에 UI를 업데이트하고, 성공 또는 실패 여부에 따라 다시 업데이트할 수 있습니다.
+- 옵티미스틱 업데이트: 옵티미스틱 업데이트를 지원하여 UI에 즉시 변경 사항을 반영할 수 있습니다. 네트워크 요청을 보내기 전에 UI를 업데이트하고, 성공 또는 실패 여부에 따라 다시 업데이트할 수 있습니다.
 
-- 재시도 및 폴링: React Query는 API 호출이 실패할 경우 자동으로 재시도하거나 주기적으로 데이터를 다시 가져오는 기능을 제공합니다. 이를 통해 네트워크 오류에 강건한 애플리케이션을 만들 수 있습니다.
+- 재시도 및 폴링: API 호출이 실패할 경우 자동으로 재시도하거나 주기적으로 데이터를 다시 가져오는 기능을 제공합니다. 이를 통해 네트워크 오류에 강건한 애플리케이션을 만들 수 있습니다.
 
-- 서버 상태 관리: React Query는 서버의 상태를 관리하고 효율적으로 처리할 수 있는 기능을 제공합니다. 예를 들어, 서버 상태가 변경되면 자동으로 데이터를 다시 가져오거나 UI를 업데이트할 수 있습니다.
+- 서버 상태 관리: 서버의 상태를 관리하고 효율적으로 처리할 수 있는 기능을 제공합니다. 예를 들어, 서버 상태가 변경되면 자동으로 데이터를 다시 가져오거나 UI를 업데이트할 수 있습니다.
 ```
 
 <br>
 
-- react-query의 사용법에 대해 알아봅시다. 여타 라이브러리들과 다르게 상당히 방대한 내용을 가지고 있기에, 공식 문서의 [Quick Start](https://tanstack.com/query/latest/docs/framework/react/quick-start) 부분에 명시되어 있는 내용들 위주로 작성해보겠습니다.
+- tanStack-query의 사용법에 대해 알아봅시다. 여타 라이브러리들과 다르게 상당히 방대한 내용을 가지고 있기에, 공식 문서의 [Quick Start](https://tanstack.com/query/latest/docs/framework/react/quick-start) 부분에 명시되어 있는 내용들 위주로 작성해보겠습니다.
 
+<br>
+
+```
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools' // Devtools를 사용하고 싶을 때
+
+const queryClient = new QueryClient() // Redux와 동일하게 인스턴스를 생성 후 최상단에서 감싸줍니다. | 따로 store를 생성하는 것은 아님
+
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}> // client 속성에 적용
+      <Example />
+      <ReactQueryDevtools initialIsOpen={false} /> // 앱 하단에 작성하여 사용
+    </QueryClientProvider>
+  )
+}
+```
+
+- queryClient는 여러가지 옵션을 적용할 수 있습니다. staleTime(캐싱 적용 시간)등... [공식문서](https://tanstack.com/query/latest/docs/reference/QueryClient#queryclient)
+
+- [Devtools](https://tanstack.com/query/latest/docs/framework/react/devtools) 는 NODE_ENV 환경변수가 development일 떄만 적용 되는 tanStack-query에서 지원하는 dependencies 라이브러리 입니다. 여러가지 옵션을 적용할 수 있으며 내부 동작을 시각화 할 수 있습니다.
+
+<br>
+
+- 기본적으로 사용 할 준비가 완료 되었으니 가상의 API 호출 함수를 이용하여 직접 사용해보겠습니다. tanStack-Query 에는 다양한 API reference가 존재하는데 그 중 서버의 GET 요청에 대한 데이터를 관리해주기 위해 useQuery 를 사용합니다. useQuery 는 v5 부터 인자로 단 하나의 객체만을 받고 그 중에 queryKey, queryFn 는 필수 값 입니다.
+
+```
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+import { getTodos, postTodo } from '../my-api' // 가상 API | 각각 get, post 요청
+
+// queryClient 인스턴스 생성
+const queryClient = new QueryClient()
+
+export default function App() {
+  return (
+    // client Props 적용
+    <QueryClientProvider client={queryClient}>
+      <Todos />
+    </QueryClientProvider>
+  )
+}
+
+export default function Todos() {
+  // 쿼리 데이터를 관리하고 조작하기위해 인스턴스 생성
+  const queryClient = useQueryClient()
+
+  // Fetching Todos (Queries)
+  const query = useQuery({ queryKey: ['todos'], queryFn: getTodos }) 
+
+  // Mutations
+  const mutation = useMutation({
+    mutationFn: postTodo,
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ['todos'] })
+    },
+  })
+
+  return (
+    <div>
+      <ul>{query.data?.map((todo) => <li key={todo.id}>{todo.title}</li>)}</ul>
+
+      <button
+        onClick={() => {
+          mutation.mutate({
+            id: Date.now(),
+            title: 'Do Laundry',
+          })
+        }
+      }>
+        Add Todo
+      </button>
+    </div>
+  )
+}
+
+render(<App />, document.getElementById('root'))
+
+```
+
+- useQuery의 queryKey는 캐싱 및 재사용을 위해 사용되는 고유 키입니다. queryFn은 실제 데이터를 가져오는 함수 (getTodos)입니다.
+
+- [useMutation](https://tanstack.com/query/latest/docs/framework/react/reference/useMutation#usemutation) 훅은 새로운 할 일을 추가하는 데 사용되며 useQuery와 같은 queryKey는 받지 않습니다. mutationFn은 서버에 새로운 할 일을 추가하는 함수 (postTodo)입니다. 쉽게 말해 useQuery 는 서버에서 데이터를 GET 할 때 사용되고, 그 이 외의 POST, PATCH, PUT, DELETE 인 경우는 useMutation 을 사용합니다.
+
+- 호출을 하기 위해 mutation 객체의 mutate 메서드를 사용합니다. mutation 객체에서 정의 될 수 있는 것은 여러가지가 있는데, onMutate는 mutation 함수가 실행되기 전에 실행되고, onSettled 는 try-catch-finally 의 finally 처럼 요청이 성공하든 에러가 발생되든 상관없이 마지막에 실행됩니다. 더욱 자세한 옵션은 위의 공식 문서에서 확인 ^^;(너무 많음)
+
+- onSuccess는 변이(mutation)가 성공적으로 완료되었을 때 실행되는 콜백 함수입니다. 여기서 onSuccess는 [queryClient.invalidateQueries](https://tanstack.com/query/latest/docs/reference/QueryClient#queryclientinvalidatequeries)를 호출하여 queryKey가 ['todos']인 쿼리를 무효화합니다. 
+
+- 무효화는 해당 쿼리가 최신 상태가 아님을 나타내며, tanStack-Query는 이를 감지하고 데이터를 다시 가져옵니다.(최신 상태가 아니면 자동으로 캐싱) 즉, 새로운 할 일을 추가한 후, 할 일 목록을 다시 가져와서 UI를 업데이트합니다.
+
+<br>
+
+- useQuery는 단일 데이터를 get 호출 하는데 병렬로 요청하는 방법도 존재합니다. 바로 useQueries 를 사용하는 것 입니다.
+
+- 아래는 제가 프로젝트에서 적용하였던 useQueries를 통한 병렬적인 데이터 처리 방식 입니다.
+
+```
+import { useQueries } from "react-query";
+import {
+  getAllPokemon,
+  getPokemonID,
+  getPokemonImage,
+  getPokemonName,
+  getPokemonType,
+  getKorPokemonType,
+  getKorPokemonRegion,
+} from "../../api/pokemon/getPokemon"; // pokeAPI에서 포켓몬 이름, ID, Image 등을 get 요청한 함수들
+
+export default function usePokemonData(page) { // usePokemonData Custom hook 작성
+  const queries = useQueries([ // useQueries는 배열안에서 작성됩니다.
+    { queryKey: ["pokemon", page], queryFn: () => getAllPokemon(page) }, 
+    { queryKey: ["id", page], queryFn: () => getPokemonID(page) },
+    { queryKey: ["name", page], queryFn: () => getPokemonName(page) },
+    { queryKey: ["image", page], queryFn: () => getPokemonImage(page) },
+    { queryKey: ["type", page], queryFn: () => getPokemonType(page) },
+    { queryKey: ["korType", page], queryFn: () => getKorPokemonType(page) },
+    { queryKey: ["korRegion", page], queryFn: () => getKorPokemonRegion(page) },
+  ]); 
+  // pagination을 사용하여 page가 바뀔 때 보여져야 할 포켓몬도 바뀌어야 하기에 queryKey 배열에 page가 추가 되었습니다.
+
+  const isLoading = queries.some((query) => query.isLoading); // queries.some 으로 모두 fresh 한 상태가 아니라면 isLoading === true
+
+  const data = {
+    pokemon: queries[0].data, // 이게 결국 queries 배열의 첫 번째 data | { queryKey: ["pokemon", page], queryFn: () => getAllPokemon(page) }
+    id: queries[1].data,
+    name: queries[2].data,
+    image: queries[3].data,
+    type: queries[4].data,
+    korType: queries[5].data,
+    korRegion: queries[6].data,
+  };
+
+  // data 객체에 할당
+
+  return { data, isLoading };
+}
+```
+
+<br>
+
+- 이제 usePokemonData 를 PokemonCard 컴포넌트에서 호출하여 다음과 같이 사용하였습니다.
+
+<br>
+
+```
+import { Container, CardContainer, Info, InfoBox, MainImage, Type, TypeBox, TypeImg } from "./style";
+import Title from "../Title";
+import typeIcons from "../../styles/typeIcon";
+import colors from "../../styles/typeColor";
+import usePokemonData from "../../hooks/Pokemon/usePokemonData";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import Pagination from "react-js-pagination";
+import "../../styles/Paging.css";
+import Loader from "../Loader";
+
+export default function PokemonCard() {
+  const { page } = useParams(); // useParams로 현재 어느 페이지에 존재하는지 확인
+  const navigate = useNavigate();
+  const { data, isLoading } = usePokemonData(page); // usePokemonData에 page를 전달
+
+  const handlePageChange = (newPage) => {
+    navigate(`/pokemon/${newPage}`);
+  };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+  
+  return ( // 받은 data를 렌더링
+    <>
+      <Title name="포켓몬 도감" />
+      <Container>
+        {data.id.map((_, item) => (
+          <Link key={item} to={`/pokemon/detail/${data.id[item]}`}>
+            <CardContainer color={data.type[item].map(typeItem => colors[typeItem])}>
+              <Info>
+                <InfoBox>
+                  no.{data.id[item]}
+                </InfoBox>
+                <InfoBox>
+                  {data.name[item]}
+                </InfoBox>
+              </Info>
+              <MainImage src={`${data.image[item]}`} alt={`${data.name[item]}`} />
+              <Type>
+                {data.type[item].map((typeItem, typeIndex) => (
+                  <TypeBox key={typeIndex} color={`${colors[typeItem]}`}>
+                    <TypeImg src={`${typeIcons[typeItem]}`} />
+                    {data.korType[item][typeIndex]}
+                  </TypeBox>
+                ))}
+              </Type>
+            </CardContainer>
+          </Link>
+        ))}
+      </Container>
+      <Pagination
+        activePage={parseInt(page)}
+        itemsCountPerPage={21}
+        totalItemsCount={1025}
+        pageRangeDisplayed={5}
+        prevPageText={"‹"}
+        nextPageText={"›"}
+        onChange={handlePageChange}
+      />
+    </>
+  );
+}
+```
+
+- tanStack-query는 서버 데이터의 상태관리를 하기에 적합한 라이브러리 입니다. 적용이 가능한 옵션이 많고 선택사항이 많기에 어느정도 러닝커브가 있을 수 있지만, 큰 커뮤니티, 많은 양의 공식문서를 통해 학습하여 사용이 가능합니다. 실제 프로젝트에 적용하는 것은 선택사항이나 성능 개선을 위해 필수적이라고 생각되어 알아보았습니다. 
+
+- Devtools가 존재하는 것은 알고 있었으나 실제로 프로젝트에 도입해서 사용해본적이 없기에, 추가적으로 다시 한번 짚고 넘어갈 예정입니다.
+
+<br>
+
+### jotai
+
+- 이번에는 [jotai](https://jotai.org/docs/introduction) 입니다. Recoil과 거의 비등비등하지만 조금 더 앞서있는 jotai에 대해서 먼저 알아보겠습니다. jotai는 원자(atom) 단위로 상태를 관리하는 것을 목표로 합니다. Jotai는 React의 훅(hook) 기반 API와 잘 통합되며, 사용자가 React 컴포넌트의 로컬 상태를 간단하게 전역 상태로 변환할 수 있게 합니다.
+
+- jotai의 핵심 로직으로는 atom, useAtom, Store, Provider가 있습니다. 
+
+```
+// npm i jotai
+
+jotai의 주요 특징
+
+- 작고 경량: Jotai는 매우 작고 가벼운 라이브러리입니다. 이는 성능 최적화와 빠른 로딩 시간을 보장합니다.
+
+- 단순성: Jotai의 API는 간단하고 직관적이며, React 훅의 개념을 확장합니다.
+
+- 컴포저블 상태: 원자(atom) 단위로 상태를 관리하여, 상태를 쉽게 조합하고 관리할 수 있습니다.
+
+- 타입스크립트 지원: 타입스크립트를 지원하여, 타입 안전성을 제공합니다.
+
+- 최소 재렌더링: 상태가 변경될 때, 관련된 컴포넌트만 재렌더링 되어 성능을 최적화합니다.
+```
+
+- jotai 는 react의 useState와 거의 동일하게 atom과 useAtom을 사용하는데 어떤 식으로 작동하는지 살펴보겠습니다.
+
+<br>
+
+```
+import React from 'react';
+import { atom, useAtom } from 'jotai';
+
+// 1. 원자(atom) 생성
+const countAtom = atom(0); // atom  초기 값
+
+// 또한 다른 원자(atom)를 기반으로 하는 파생된 상태를 쉽게 생성 가능 합니다.
+
+const doubleCountAtom = atom((get) => get(countAtom) * 2) // get으로 다른 원자 호출
+
+function Counter() {
+  // 2. useAtom 훅을 사용하여 원자(atom) 상태와 상태 업데이트 함수를 가져옴
+  const [count, setCount] = useAtom(countAtom);
+  
+  const [doubleCount] = useAtom(doubleCountAtom);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <p>Doubled Count: {doubledCount}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div>
+      <h1>Jotai Counter Example</h1>
+      <Counter />
+    </div>
+  );
+}
+
+export default App;
+```
+
+<br>
+
+- react의 useState를 사용해보았다면 문제 없이 쉽게 사용할 수 있다는 것을 알 수 있습니다. 또한 원자를 바탕으로 다른 원자를 get으로 호출하여 쉽게 파생하여 사용할 수 있습니다.
+
+- jotai는 기본적으로 React Context를 사용하여 전역 상태를 관리하지만, 필요에 따라 커스텀 [store](https://jotai.org/docs/core/store)나 [provider](https://jotai.org/docs/core/provider)를 사용할 수 있는 유연성을 제공, 이 기능은 상태 관리의 범위를 한정하거나 여러 상태 컨텍스트를 사용하는 애플리케이션에서 유용하며 사용방법은 Redux와 동일 합니다.
+
+- 또한 다음과 같이 비동기 작업을 하는 Async Atom (비동기 원자)을 쉽게 생성할 수 있습니다. Redux의 경우 비동기 작업을 하기 위해서는 Redux-thunk와 같은 미들웨어 라이브러리를 설치해야하기 때문에 더욱 간단하게 사용이 가능하다는 장점이 있습니다.
+
+<br>
+
+```
+import { atom, useAtom } from 'jotai';
+
+const userAtom = atom(async () => {
+  const response = await fetch('/api/user');
+  const user = await response.json();
+  return user;
+});
+
+function UserProfile() {
+  const [user, setUser] = useAtom(userAtom);
+  return (
+    <div>
+      {user ? <p>{user.name}</p> : <p>Loading...</p>}
+    </div>
+  );
+}
+```
+
+- jotai는 기술스택에 요구되거나 따로 사용하는 분들을 많이 보지 못해서 등한시 하고있었는데, 공식 문서 UI가 가장 읽기 좋게 되어 있다는 점이 마음에 들었습니다. jotai 또한 매우 가벼운(zustand의 2배 => 얘가 비정상적으로 가벼움;;) 라이브러리 이고 커스텀 하여 사용할 수 있기에 경쟁력이 있다는 생각이 들었습니다.
+
+<br>
+
+### 💡 면접 대비를 위한 CS tip : 상태관리에 대한 3가지 접근 방식
+
+1. Flux
+
+- 저장소(store) / 액션함수(action) / 리듀서 등을 통해서 상태를 업데이트 하는 방식 | Redux, Zustand
+
+2. Proxy
+
+- 컴포넌트에 사용되는 일부 상태를 자동으로 감지해서 업데이트 하는 방식 | Mobx, Valtio
+
+3. Atomic
+
+- React에 사용되는 state와 비슷하게 리액트 트리 안에서 상태를 저장하고 관리하는 방식 | Recoil, Jotai
